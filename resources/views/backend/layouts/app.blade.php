@@ -28,6 +28,10 @@
   <link rel="stylesheet" href="{{url(asset('ui/plugins/daterangepicker/daterangepicker.css'))}}">
   <!-- summernote -->
   <link rel="stylesheet" href="{{url(asset('ui/plugins/summernote/summernote-bs4.min.css'))}}">
+  <link rel="stylesheet" href="https://cdn.datatables.net/2.2.2/css/dataTables.bootstrap4.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  
   @stack('çss')
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -117,6 +121,8 @@
 <script src="{{url(asset('ui/dist/js/demo.js'))}}"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="{{url(asset('ui/dist/js/pages/dashboard.js'))}}"></script>
+<script src="https://cdn.datatables.net/2.2.2/js/dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/2.2.2/js/dataTables.bootstrap4.min.js"></script>
 @stack('js')
 </body>
 </html>
