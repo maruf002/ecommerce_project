@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PermissionController;
 
@@ -32,6 +33,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/permission/create', [PermissionController::class, 'create'])->name('permission.create');
     Route::post('/permission/store', [PermissionController::class, 'store'])->name('permission.store');
     Route::get('/permission/{id}/edit', [PermissionController::class, 'edit'])->name('permission.edit');
+    Route::resource('roles', RoleController::class);
+
 });
 
 require __DIR__.'/auth.php';

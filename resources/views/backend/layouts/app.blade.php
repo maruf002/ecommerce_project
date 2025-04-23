@@ -29,9 +29,7 @@
   <!-- summernote -->
   <link rel="stylesheet" href="{{url(asset('ui/plugins/summernote/summernote-bs4.min.css'))}}">
   <link rel="stylesheet" href="https://cdn.datatables.net/2.2.2/css/dataTables.bootstrap4.min.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-  
   @stack('çss')
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
