@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use Illuminate\Support\Facades\Validator;
+
 class RoleController extends Controller
 {
     /**
@@ -11,7 +14,8 @@ class RoleController extends Controller
      */
     public function index()
     {
-        //
+        $roles = Role::latest()->get();
+        return view('backend.role.index', compact('roles'));
     }
 
     /**
@@ -20,8 +24,7 @@ class RoleController extends Controller
     public function create()
     {
         $permissions = Permission::latest()->get();
-        return view('backend.role.create',compact('permissions'));
-
+        return view('backend.role.create', compact('permissions'));
     }
 
     /**
@@ -29,7 +32,26 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|unique:roles|min:3',
+        ]);
+
+
+        if ($validator->passes()) {
+
+            $role =  Role::create(['name' => $request->input('name')]);
+            if (!empty($request->permission)) {
+                foreach ($request->permission as $val) {
+
+                    $role->givePermissionTo($val);
+                }
+            }
+
+            return redirect()->route('roles.index');
+        } else {
+            return redirect()->route('roles.create')->withInput()->WithErrors($validator);
+        }
     }
 
     /**
@@ -45,7 +67,11 @@ class RoleController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $role           = Role::findOrFail($id);
+        $hasPermission  = $role->permissions->pluck('name');
+        $permissions    = Permission::orderBy('name', 'ASC')->get();
+
+        return view('backend.role.edit', compact('role', 'hasPermission', 'permissions'));
     }
 
     /**
@@ -53,7 +79,23 @@ class RoleController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'name' => "required|min:3|unique:roles,name,{$id}",
+        ]);
+
+        $role           = Role::findOrFail($id);
+        if ($validator->passes()) {
+            $role->name = $request->name;
+            $role->save();
+            if (!empty($request->permission)) {
+                $role->syncPermissions($request->permission);
+            } else {
+                $role->syncPermissions([]);
+            }
+            return redirect()->route('roles.index')->with('success', 'Roles Updated Successfully');
+        } else {
+            return redirect()->back()->withInput()->withErrors($validator);
+        }
     }
 
     /**

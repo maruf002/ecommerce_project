@@ -22,17 +22,8 @@ class PermissionController extends Controller
     }
     public function store(Request $request){
 
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|unique:permissions|min:3',
-        ]);
 
-        if($validator->passes()){
-            Permission::create($request->all());
-            return redirect()->route('permission.index');
-         }else{
-            return redirect()->route('permission.create')->withInput()->WithErrors($validator);
 
-        }
 
     }
     public function edit($id){

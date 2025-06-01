@@ -8,10 +8,10 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="page-header">
-                            <h4 class="header-title">Permission</h4>
+                            <h4 class="header-title">Roles</h4>
                             <div class="header-buttons">
                                 @can('permission-create')
-                                    <a href="{{ route('permissions.create') }}" class="btn btn-primary btn-sm fnt_sz"> <i
+                                    <a href="{{ route('roles.create') }}" class="btn btn-primary btn-sm fnt_sz"> <i
                                             class="fa fa-plus-circle"></i> {{ __('button.add_new') }}</a>
                                 @endcan
                             </div>
@@ -20,19 +20,23 @@
                         <table class="table table-bordered datatables" id="get_all_permissions">
                             <thead>
                                 <tr>
-                                  <th class="text-center">Sl</th>
-                                  <th class="text-center">Name</th>
-                                  <th class="text-center">Action</th>
-                                  
+                                    <th class="text-center">Sl</th>
+                                    <th class="text-center">Name</th>
+                                    <th class="text-center">Permission</th>
+                                    <th class="text-center">Action</th>
+
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($permissions as $key => $value)
+                                @foreach ($roles as $key => $value)
                                     <tr>
-                                     
-                                      <td class="text-center">{{ $key+1 }}</td>
-                                      <td class="text-center">{{ $value->name }}</td>
-                                      <td class="text-center"><a class="btn btn-sm btn-warning"  href="{{ route('permission.edit', $value->id) }}"><i class="fa fa-edit "></i> Edit</a></td> 
+
+                                        <td class="text-center">{{ $key + 1 }}</td>
+                                        <td class="text-center">{{ $value->name }}</td>
+                                        <td class="text-center">{{ $value->permissions->pluck('name')->implode(',') }}</td>
+                                        <td class="text-center"><a class="btn btn-sm btn-warning"
+                                                href="{{ route('roles.edit', $value->id) }}"><i class="fa fa-edit "></i>
+                                                Edit</a></td>
 
                                     </tr>
                                 @endforeach
@@ -48,12 +52,10 @@
 @endsection
 
 @push('js')
-  <script>
+    <script>
         $('.datatables').DataTable({
 
 
-      });
-
-  </script>
-
+        });
+    </script>
 @endpush
