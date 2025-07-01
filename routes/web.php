@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\MenuController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProfileController;
@@ -36,6 +37,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/permission/{id}/edit', [PermissionController::class, 'edit'])->name('permission.edit');
     Route::resource('roles', RoleController::class);
     Route::resource('users', UserController::class);
+    Route::resource('menus',MenuController::class);
 
 });
 
